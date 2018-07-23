@@ -94,6 +94,20 @@
         {
             leftCell =[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"leftCell"];
         }
+        
+        
+        NSInteger currentRow = [indexPath row];
+        NSInteger oldRow = [_lastPath row];
+        
+        if (currentRow == oldRow && _lastPath!=nil)
+        {
+            // 被选中状态
+            leftCell.textLabel.textColor = [UIColor redColor];
+            
+        }else{
+            
+            leftCell.textLabel.textColor = [UIColor blackColor];
+        }
         //左侧tableView显示省份
         leftCell.textLabel.text = _provincesArray[indexPath.row];
         
