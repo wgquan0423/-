@@ -18,6 +18,7 @@
 @property(nonatomic,strong)NSArray * citiesArray;
 @property(nonatomic,copy)NSString * currentProvince;
 @property(nonatomic,copy)NSString * currentCity;
+@property(nonatomic,copy)NSIndexPath * lastPath;
 
 @end
 
@@ -63,8 +64,7 @@
     _cityNamesDict =[NSDictionary dictionaryWithContentsOfFile:cityPath];
     
      _provincesArray = [_cityNamesDict allKeys];
-    
-    _currentProvince = _provincesArray[0];
+     _currentProvince = _provincesArray[0];
     
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -120,6 +120,21 @@
 {
     if(_leftTableView==tableView)
     {
+        
+        NSInteger newRow = indexPath.row;
+        NSInteger oldRow = (self.lastPath!=nil)?(self.lastPath.row):-1;
+        if(newRow!=oldRow)
+        {
+             UITableViewCell * newLeftCell =[tableView cellForRowAtIndexPath:indexPath];
+            newLeftCell.textLabel.textColor = [UIColor redColor];
+            
+            UITableViewCell * oldLeftCell =[tableView cellForRowAtIndexPath:_lastPath];
+            oldLeftCell.textLabel.textColor = [UIColor blackColor];
+            
+        }
+        
+        self.lastPath = indexPath;
+        
         _currentProvince = _provincesArray[indexPath.row];
         [_rightTableView reloadData];
         
